@@ -23,8 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Index {}
-    /*
+@Path("/")
+public class Index {
+
     @Context
     ThreadLocal<HttpServletRequest> requestInvoker;
     @Context
@@ -34,9 +35,9 @@ public class Index {}
     private final AuthService authService = ServiceFactory.get(AuthService.class);
 
     @GET
-    @Path("item/{n}")
+    @Path("item/{id}")
     @Produces(WebType.TEXT_HTML)
-    public Viewable item(@PathParam("n") Long id) {
+    public Viewable item(@PathParam("id") Long id) {
         Model model = new Model();
         model.put("event", eventService.get(id));
         model.put("title","Карточка мероприятия");
@@ -52,18 +53,20 @@ public class Index {}
     }
 
     @GET
-    @Path("addToBasket/{n}")
+    @Path("addToBasket/{id}")
     @Produces(WebType.TEXT_HTML)
     public Viewable addToBasket(@PathParam("id") Long id) {
+        authService.setParams(requestInvoker, responseInvoker);
         authService.addToBasket(id);
         authService.redirect("/basket");
         return null;
     }
 
     @GET
-    @Path("removeFromBasket/{n}")
+    @Path("removeFromBasket/{id}")
     @Produces(WebType.TEXT_HTML)
     public Viewable removeFromBasket(@PathParam("id") Long id) {
+        authService.setParams(requestInvoker, responseInvoker);
         authService.removeFromBasket(id);
         authService.redirect("/basket");
         return null;
@@ -73,8 +76,9 @@ public class Index {}
     @Path("clearBasket")
     @Produces(WebType.TEXT_HTML)
     public Viewable clearBasket(){
+        authService.setParams(requestInvoker, responseInvoker);
         authService.clearBasket();
-        authService.redirect("/index");
+        authService.redirect("/");
         return null;
     }
 
@@ -97,7 +101,7 @@ public class Index {}
             }
         }
         Model model = new Model();
-        model.put("events", basketList);
+        model.put("list", basketList);
         return Self.view("basket", model);
     }
-}*/
+}

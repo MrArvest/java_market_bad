@@ -49,7 +49,7 @@ public class UserController {
         if (authService.auth(map.getFirst("login"),
                 map.getFirst("password"))){
             authService.setParams(requestInvoker, responseInvoker)
-                    .redirect("/index");
+                    .redirect("/");
             return null;
         }
         authService.redirect("/userIn");
@@ -67,6 +67,7 @@ public class UserController {
     @Path("/registration")
     @Produces(WebType.TEXT_HTML)
     public Viewable registrationIn(MultivaluedMap<String, String>map){
+        authService.setParams(requestInvoker, responseInvoker);
         if (authService.auth(map.getFirst("login"),
                 map.getFirst("password"))){
             authService.setParams(requestInvoker, responseInvoker)
@@ -74,7 +75,7 @@ public class UserController {
             return null;
         } //Проверяем, не является ли регистрирующийся уже юзером
         authService.setParams(requestInvoker, responseInvoker).createUser(map);
-        authService.redirect("/index");
+        authService.redirect("/");
         return null;
     }//... иначе регистрируем нового юзера и редиректим в корзину
 
@@ -97,18 +98,21 @@ public class UserController {
     @Consumes("application/x-www-form-urlencoded")//???????????????????????????????????
     @Produces(WebType.TEXT_HTML)
     public void checkAuth(MultivaluedMap<String, String> auth){
+        authService.setParams(requestInvoker, responseInvoker);
         if (!authService.auth(auth.getFirst("login"),
                 auth.getFirst("password"))){
-            authService.setParams(requestInvoker, responseInvoker)
+            authService
                     .redirect("/user/in");
             return;
         }//Проверяем является ли входящий юзером
         if(authService.isAdmin()){
-            authService.setParams(requestInvoker, responseInvoker)
+            authService
                     .redirect("/admin");
             return;
         }//... если он админ
-        authService.setParams(requestInvoker, responseInvoker)
+
+
+        authService
                 .redirect("/basket");
     }//... иначе редирект в корзину
 

@@ -24,7 +24,8 @@
             <th>Id</th>
             <th>Название</th>
             <th>Дата</th>
-            <th>&nbsp;</th>
+            <th>Количество</th>
+            <th>Цена</th>
         </tr>
         </thead>
         <tbody>
@@ -33,6 +34,8 @@
             <td th:text="${event.getId()}"></td>
             <td th:text="${event.getName()}"></td>
             <td th:text="${event.getDtime()}"></td>
+            <td th:text="${event.getTickets()}"></td>
+            <td th:text="${event.getPrice()}"></td>
             <td>
                 <a th:href="@{'/admin/edit/'+${event.getId()}}">изменить</a>
                 <a th:href="@{'/admin/remove/'+${event.getId()}}">удалить</a>

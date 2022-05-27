@@ -13,7 +13,7 @@ public class UserRepository extends Repository<User>{
     public User auth(String login, String password){
         String pass = Self.md5(password);
         Session sess = sf.openSession();
-        List<User> users = sess.createQuery("SELECT u FROM users u WHERE" +
+        List<User> users = sess.createQuery("SELECT u FROM User u WHERE" +
                         " u.login = :login and u.password = :password", User.class)
                 .setParameter("login", login)
                 .setParameter("password", pass)

@@ -20,7 +20,9 @@
         <tr>
             <th>Id</th>
             <th>Название</th>
-            <th>Дата</th>
+            <th>Дата и время</th>
+            <th>Цена</th>
+            <th>Кол-во</th>
             <th>&nbsp;</th>
         </tr>
         </thead>
@@ -30,9 +32,11 @@
             <td th:text="${event.getId()}"></td>
             <td th:text="${event.getName()}"></td>
             <td th:text="${event.getDtime()}"></td>
+            <td th:text="${event.getPrice()}"></td>
+            <td th:text="${event.getTickets()}"></td>
             <td>
                 <a th:href="@{'/item/'+${event.getId()}}">посмотреть</a>
-                <a th:href="@{'/item/addToBasket/'+${event.getId()}}">добавить в корзину</a>
+                <a th:href="@{'/addToBasket/'+${event.getId()}}">добавить в корзину</a>
             </td>
         </tr>
         </tbody>

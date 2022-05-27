@@ -16,10 +16,7 @@ public class EventServiceImpl implements EventService {
     private final EventRepository repository = ServiceFactory.get(EventRepository.class);
     @Override
     public List<Event> getAll() {
-        Model model = new Model();
-        model.put("title","Администрирование");
-        model.put("list",repository.getAll());
-        return (List<Event>) model;
+        return repository.getAll();
     }
 
     @Override
@@ -34,6 +31,7 @@ public class EventServiceImpl implements EventService {
         event.setName(params.get("name").get(0));
         event.setTickets(Integer.parseInt(params.get("tickets").get(0)));
         event.setTicketFree(event.getTickets());
+        event.setPrice(Integer.parseInt(params.get("price").get(0)));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         String dtime = params.get("dtime").get(0);
         if(!dtime.isEmpty()){

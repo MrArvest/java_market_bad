@@ -27,8 +27,13 @@ public class AdminContr {
     @Produces(WebType.TEXT_HTML)
     public Viewable index() {
         authService.setParams(requestInvoker, responseInvoker).accessRedirect();
-        return Self.view("admin", (Model) eventService.getAll());
+        Model model = new Model();
+        model.put("title","Администрирование");
+        model.put("list",eventService.getAll());
+        return Self.view("admin", model);
     }
+
+    @Path("/add")
     @GET
     @Produces(WebType.TEXT_HTML)
     public Viewable add() {
@@ -38,6 +43,7 @@ public class AdminContr {
         model.put("event",new Event());
         return Self.view("add", model);
     }
+
     @POST
     @Consumes("application/x-www-form-urlencoded")
     @Produces(WebType.TEXT_HTML)
@@ -45,13 +51,17 @@ public class AdminContr {
         eventService.save(event);
         return index();
     }
+
     @GET
+    @Path("/remove/{id}")
     @Produces(WebType.TEXT_HTML)
     public Viewable remove(@PathParam("id") Long id) {
         eventService.delete(id);
         return index();
     }
+
     @GET
+    @Path("/edit/{id}")
     @Produces(WebType.TEXT_HTML)
     public Viewable edit(@PathParam("id") Long id) {
         Model model = new Model();
@@ -60,5 +70,4 @@ public class AdminContr {
         model.put("controlName","Изменить мероприятия");
         return Self.view("add", model);
     }
-
 }

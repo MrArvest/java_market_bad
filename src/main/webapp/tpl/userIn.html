@@ -11,7 +11,7 @@
 <body>
 <div class="container">
     <h1>Авторизация</h1>
-    <form method="post" action="/user/">
+    <form method="post" action="/user">
         <div class="row mb-3">
             <label for="login" class="col-sm-2 col-form-label">Логин</label>
             <div class="col-sm-10">
@@ -31,7 +31,7 @@
             </div>
         </div>
     </form>
-    <button th:href="@{'/registrationPage}">Зарегистрироваться</button>
+    <a class="btn" href="/user/registration">Зарегистрироваться</a>
 </div>
 </body>
 </html>

@@ -30,7 +30,13 @@
         <div class="row mb-3">
             <label for="tickets" class="col-sm-2 col-form-label">Количество билетов</label>
             <div class="col-sm-10">
-                <input type="number" name="tickets"  th:value="${event.tickets}" class="form-control" id="tickets">
+                <input type="number" name="tickets"  th:value="${event.getTickets()}" class="form-control" id="tickets">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="price" class="col-sm-2 col-form-label">Цена</label>
+            <div class="col-sm-10">
+                <input type="number" name="price"  th:value="${event.getPrice()}" class="form-control" id="price">
             </div>
         </div>
         <div class="row mb-3">

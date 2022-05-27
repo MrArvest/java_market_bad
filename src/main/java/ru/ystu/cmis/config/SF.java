@@ -2,11 +2,14 @@ package ru.ystu.cmis.config;
 
 import com.sun.xml.bind.api.impl.NameConverter;
 import ognl.Token;
-import org.h2.engine.Session;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import ru.ystu.cmis.domain.Event;
+import ru.ystu.cmis.domain.User;
+import ru.ystu.cmis.utill.Self;
 import sun.security.krb5.internal.Ticket;
 import sun.security.provider.ConfigFile;
 
@@ -26,6 +29,7 @@ public class SF {
         Configuration cfg = new Configuration()
                 .addAnnotatedClass(Event.class)
                 .addAnnotatedClass(Ticket.class)
+                .addAnnotatedClass(User.class)
                 .addAnnotatedClass(Token.class);
         cfg.setProperty("hibernate.connection.url",conf.get(Config.URL));
         cfg.setProperty("hibernate.connection.username",conf.get(Config.USER));
@@ -34,7 +38,12 @@ public class SF {
         StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
         builder.applySettings(cfg.getProperties());
         sf = cfg.buildSessionFactory(builder.build());
-
+        Session sess = sf.openSession();
+        Transaction tx = sess.beginTransaction();
+        sess.save(User.builder().login("admin").password(Self.md5("admin")).role("admin").build());
+        sess.flush();
+        tx.commit();
+        sess.close();
 
     }
     public static SessionFactory getInstance(){
